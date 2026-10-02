@@ -1,0 +1,1 @@
+{"accuracy_test": 83.4, "epochs_initial": 10, "epochs_finetuning": 10, "architecture": "ResNet50", "type": "unimodal_images"}

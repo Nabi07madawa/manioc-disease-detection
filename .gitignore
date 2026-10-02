@@ -1,0 +1,21 @@
+# Credentials
+kaggle.json
+
+# Large datasets (images)
+train_images/
+test_images/
+train_tfrecords/
+test_tfrecords/
+
+# Models (too large for GitHub, hosted on Hugging Face)
+models/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+
+# Environment
+.env
+*.log
