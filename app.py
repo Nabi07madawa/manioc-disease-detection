@@ -1,3 +1,4 @@
+import os
 import gradio as gr
 import torch
 import torch.nn as nn
@@ -32,9 +33,12 @@ class MultimodalModel(nn.Module):
         return self.fusion(combined)
 
 
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "models", "best_multimodal_v2.pth")
+MAX_IMAGE_SIZE = 10 * 1024 * 1024
+
 device = torch.device("cpu")
 model = MultimodalModel().to(device)
-model.load_state_dict(torch.load("models/best_multimodal_v2.pth", map_location=device))
+model.load_state_dict(torch.load(MODEL_PATH, map_location=device, weights_only=True))
 model.eval()
 
 transform = transforms.Compose([
@@ -55,6 +59,21 @@ maladies = {
 def predire_maladie(image, temperature, precipitation, humidite, vent, evapotranspiration):
     if image is None:
         return "Veuillez uploader une image"
+
+    if not isinstance(image, np.ndarray):
+        return "Format d'image non valide"
+
+    if image.size > MAX_IMAGE_SIZE:
+        return "Image trop volumineuse (max 10 Mo)"
+
+    if image.ndim not in (2, 3):
+        return "Format d'image non supporte"
+
+    temperature = float(np.clip(temperature, 15, 40))
+    precipitation = float(np.clip(precipitation, 0, 15))
+    humidite = float(np.clip(humidite, 30, 100))
+    vent = float(np.clip(vent, 0, 30))
+    evapotranspiration = float(np.clip(evapotranspiration, 0, 10))
 
     img = Image.fromarray(image).convert('RGB')
     img_tensor = transform(img).unsqueeze(0).to(device)

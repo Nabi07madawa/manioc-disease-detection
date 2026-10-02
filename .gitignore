@@ -1,5 +1,9 @@
-# Credentials
+# Credentials & secrets
 kaggle.json
+*.key
+*.pem
+.env
+.env.*
 
 # Large datasets (images)
 train_images/
@@ -7,7 +11,7 @@ test_images/
 train_tfrecords/
 test_tfrecords/
 
-# Keep only the multimodal model (needed for deployment)
+# Unimodal model (not needed for deployment)
 models/best_model.pth
 
 # Python cache
@@ -16,6 +20,7 @@ __pycache__/
 *.pyo
 .ipynb_checkpoints/
 
-# Environment
-.env
+# System files
 *.log
+.DS_Store
+Thumbs.db
