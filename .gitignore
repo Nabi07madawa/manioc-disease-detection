@@ -7,8 +7,8 @@ test_images/
 train_tfrecords/
 test_tfrecords/
 
-# Models (too large for GitHub, hosted on Hugging Face)
-models/
+# Keep only the multimodal model (needed for deployment)
+models/best_model.pth
 
 # Python cache
 __pycache__/
